@@ -4,6 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class DistanceAttackState : State
 {
+    private const string DistanceAttackAnimationName = "DistanceAttack";
+    
     [SerializeField] private int _damage;
     [SerializeField] private float _duration = 1f;
     
@@ -19,7 +21,7 @@ public class DistanceAttackState : State
     {
         var distance = Math.Abs((transform.position - Target.transform.position).magnitude);
         _speed = distance / _duration;
-        _animator.Play("DistanceAttack");
+        _animator.Play(DistanceAttackAnimationName);
     }
 
     private void Update()

@@ -1,9 +1,19 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Timer))]
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private float _speed;
     [SerializeField] private int _damage;
+    
+    private Timer _timer;
+
+    private void Awake()
+    {
+        _timer = GetComponent<Timer>();
+        _timer.StartCountdown();
+        _timer.TimeOut += SelfDestroy;
+    }
 
     private void Update()
     {
@@ -16,6 +26,12 @@ public class Bullet : MonoBehaviour
             return;
         
         enemy.TakeDamage(_damage);
+        SelfDestroy();
+    }
+
+    private void SelfDestroy()
+    {
+        _timer.TimeOut -= SelfDestroy;
         Destroy(gameObject);
     }
 }

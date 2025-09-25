@@ -13,7 +13,6 @@ public class Player : MonoBehaviour
     private Weapon _currentWeapon;
     private int _currentHealth;
     private int _currentWeaponIndex = 0;
-    private Animator _animator;
     
     public int Money => _money;
     public List<Weapon> Weapons => _weapons;
@@ -28,7 +27,6 @@ public class Player : MonoBehaviour
     {
         _currentWeapon = _weapons[0];
         _currentHealth = _health;
-        _animator = GetComponent<Animator>();
     }
 
     private void Update()

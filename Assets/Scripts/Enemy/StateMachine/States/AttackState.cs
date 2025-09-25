@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class AttackState : State
 {
+    private const string AttackAnimationName = "Attack";
+    
     [SerializeField] private int _damage;
     [SerializeField] private float _attackDelay;
     
@@ -27,7 +29,7 @@ public class AttackState : State
 
     private void Attack(Player target)
     {
-        _animator.Play("Attack");
+        _animator.Play(AttackAnimationName);
         target.TakeDamage(_damage);
     }
 }

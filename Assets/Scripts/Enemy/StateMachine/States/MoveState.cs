@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class MoveState : State
 {
+    private const string WalkAnimationName = "Walk";
+    
     [SerializeField] private float _speed;
 
     private Animator _animator;
@@ -14,7 +16,7 @@ public class MoveState : State
 
     private void OnEnable()
     {
-        _animator.Play("Walk");
+        _animator.Play(WalkAnimationName);
     }
 
     private void OnDisable()
