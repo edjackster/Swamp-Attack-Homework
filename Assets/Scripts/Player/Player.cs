@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
     [SerializeField] private int _health;
@@ -11,6 +12,7 @@ public class Player : MonoBehaviour
     [SerializeField] private int _money;
 
     private Weapon _currentWeapon;
+    private PlayerInput _input;
     private int _currentHealth;
     private int _currentWeaponIndex = 0;
     
@@ -27,18 +29,21 @@ public class Player : MonoBehaviour
     {
         _currentWeapon = _weapons[0];
         _currentHealth = _health;
+        _input = GetComponent<PlayerInput>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (Input.GetMouseButtonDown(0))
-            _currentWeapon.Shoot(_shootingPoint);
-        
-        if(Input.GetKeyDown(KeyCode.W))
-            NextWeapon();
-        
-        if(Input.GetKeyDown(KeyCode.S))
-            PreviousWeapon();
+        _input.DownPressed += PreviousWeapon;
+        _input.UpPressed += NextWeapon;
+        _input.MouseClicked += Shoot;
+    }
+
+    private void OnDisable()
+    {
+        _input.DownPressed -= PreviousWeapon;
+        _input.UpPressed -= NextWeapon;
+        _input.MouseClicked -= Shoot;
     }
 
     public void NextWeapon()
@@ -85,5 +90,10 @@ public class Player : MonoBehaviour
     {
         _currentWeapon = weapon;
         CurrentWeaponChanged?.Invoke(weapon);
+    }
+
+    private void Shoot()
+    {
+        _currentWeapon.Shoot(_shootingPoint);
     }
 }
