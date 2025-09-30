@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    [SerializeField] private UIService _uiService;  // обязательно в инспекторе
+    
     private const int LeftMouseButton = 0;
     
     public event Action MouseClicked;
@@ -11,7 +13,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(LeftMouseButton))
+        if (Input.GetMouseButtonDown(LeftMouseButton) && !_uiService.IsPointerOverUI())
             MouseClicked?.Invoke();
         
         if(Input.GetKeyDown(KeyCode.W))
