@@ -18,12 +18,12 @@ public class UIService : MonoBehaviour
 
     public bool IsPointerOverUI()
     {
-        var pointerData = new PointerEventData(_eventSystem)
-        {
-            position = Input.mousePosition
-        };
+        var pointerData = new PointerEventData(_eventSystem);
         var results = new List<RaycastResult>();
+        
+        pointerData.position = Input.mousePosition;
         _graphicRaycaster.Raycast(pointerData, results);
+        
         return results.Count > 0;
     }
 }
